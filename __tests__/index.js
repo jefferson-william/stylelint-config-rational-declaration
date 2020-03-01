@@ -20,7 +20,7 @@ const getPluginOptions = (code, rules) => ({
   configBasedir: __dirname,
 });
 
-describe('stylelint-config-rational-order default config', () => {
+describe('stylelint-config-rational-declaration default config', () => {
   const wrong = `
     a {
       width: auto;
@@ -40,11 +40,11 @@ describe('stylelint-config-rational-order default config', () => {
       display: block;
       width: auto;
       height: auto;
-      margin: 10px;
+      border: 1px solid blue;
       padding: 10px;
+      margin: 10px;
       color: red;
       background: white;
-      border: 1px solid blue;
     }
   `;
 
@@ -53,10 +53,11 @@ describe('stylelint-config-rational-order default config', () => {
       const { errored } = output;
       const { warnings } = output.results[0];
       const expectedWarnings = [
-        'Expected "display" to come before "height" in group "Box Model" (order/properties-order)',
+        'Expected "display" to come before "height" in group "Structure" (order/properties-order)',
         'Expected "position" to come before "margin" in group "Positioning" (order/properties-order)',
-        'Expected "padding" to come before "color" in group "Box Model" (order/properties-order)',
-        'Expected "background" to come before "border" in group "Visual" (order/properties-order)',
+        'Expected "padding" to come before "color" in group "Definition" (order/properties-order)',
+        'Expected "border" to come before "padding" in group "Definition" (order/properties-order)',
+        'Expected "background" to come before "border" in group "Definition" (order/properties-order)',
       ];
       expect(errored).toBeTruthy();
       warnings.forEach(({ text }, idx) => {
@@ -66,6 +67,7 @@ describe('stylelint-config-rational-order default config', () => {
 
   it('correct', () =>
     stylelint.lint(getExtendedConfig(correct)).then(output => {
+      // console.log(JSON.stringify(output));
       const { errored } = output;
       const { warnings } = output.results[0];
       expect(errored).toBeFalsy();
@@ -73,7 +75,7 @@ describe('stylelint-config-rational-order default config', () => {
     }));
 });
 
-describe('stylelint-config-rational-order/plugin', () => {
+describe('stylelint-config-rational-declaration/plugin', () => {
   describe('correct order with enabled plugin', () => {
     it('with default values (border in visual section and no empty lines between groups)', () => {
       const rules = {
@@ -83,9 +85,9 @@ describe('stylelint-config-rational-order/plugin', () => {
         a {
           position: relative;
           display: block;
+          border: 1px solid blue;
           color: red;
           background: white;
-          border: 1px solid blue;
         }
       `;
       return stylelint.lint(getPluginOptions(correct, rules)).then(output => {
@@ -96,14 +98,9 @@ describe('stylelint-config-rational-order/plugin', () => {
       });
     });
 
-    it('with "border-in-box-model" = true', () => {
+    it('with new test', () => {
       const rules = {
-        [ruleName]: [
-          true,
-          {
-            'border-in-box-model': true,
-          },
-        ],
+        [ruleName]: [true],
       };
       const correct = `
         a {
@@ -137,15 +134,17 @@ describe('stylelint-config-rational-order/plugin', () => {
           z-index: 10;
 
           display: block;
+
           width: auto;
           height: auto;
-          margin: 10px;
+
+          border: 1px solid blue;
           padding: 10px;
+          margin: 10px;
 
           color: red;
 
           background: white;
-          border: 1px solid blue;
         }
       `;
       return stylelint.lint(getPluginOptions(correct, rules)).then(output => {
@@ -156,12 +155,11 @@ describe('stylelint-config-rational-order/plugin', () => {
       });
     });
 
-    it('with "border-in-box-model" = true AND with "empty-line-between-groups" = true', () => {
+    it('with "empty-line-between-groups" = true', () => {
       const rules = {
         [ruleName]: [
           true,
           {
-            'border-in-box-model': true,
             'empty-line-between-groups': true,
           },
         ],
@@ -172,12 +170,14 @@ describe('stylelint-config-rational-order/plugin', () => {
           z-index: 10;
 
           display: block;
+          overflow: auto;
+
           width: auto;
           height: auto;
-          margin: 10px;
-          padding: 10px;
+
           border: 1px solid blue;
-          overflow: auto;
+          padding: 10px;
+          margin: 10px;
 
           color: red;
 
@@ -223,7 +223,6 @@ describe('stylelint-config-rational-order/plugin', () => {
         [ruleName]: [
           true,
           {
-            borderInBoxModel: true,
             emptyLineBetweenGroups: true,
             'bla-bla-bla': false,
           },

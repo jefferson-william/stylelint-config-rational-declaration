@@ -1,5 +1,3 @@
-const borderProps = require('./border');
-
 const partOne = [
   'list-style',
   'list-style-position',
@@ -23,11 +21,6 @@ const partOne = [
 ];
 
 const partTwo = [
-  'outline',
-  'outline-width',
-  'outline-style',
-  'outline-color',
-  'outline-offset',
   'box-shadow',
   'box-decoration-break',
   'transform',
@@ -45,4 +38,4 @@ const partTwo = [
   'mix-blend-mode',
 ];
 
-module.exports = ({ border }) => [].concat(partOne, border ? borderProps : [], partTwo);
+module.exports = () => [].concat(partOne, partTwo);

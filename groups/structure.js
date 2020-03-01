@@ -1,10 +1,15 @@
-const borderProps = require('./border');
-
 const partOne = [
   'display',
   'flex',
-  'flex-basis',
   'flex-direction',
+  'justify-content',
+  'justify-items',
+  'justify-self',
+  'align-content',
+  'align-items',
+  'align-self',
+  'order',
+  'flex-basis',
   'flex-flow',
   'flex-grow',
   'flex-shrink',
@@ -28,34 +33,11 @@ const partOne = [
   'grid-template-rows',
   'grid-template-columns',
   'gap',
-  'align-content',
-  'align-items',
-  'align-self',
-  'justify-content',
-  'justify-items',
-  'justify-self',
-  'order',
   'float',
   'clear',
   'box-sizing',
-  'width',
-  'min-width',
-  'max-width',
-  'height',
-  'min-height',
-  'max-height',
-  'margin',
-  'margin-top',
-  'margin-right',
-  'margin-bottom',
-  'margin-left',
-  'padding',
-  'padding-top',
-  'padding-right',
-  'padding-bottom',
-  'padding-left',
 ];
 
 const partTwo = ['object-fit', 'object-position', 'overflow', 'overflow-x', 'overflow-y'];
 
-module.exports = ({ border }) => [].concat(partOne, border ? borderProps : [], partTwo);
+module.exports = [...partOne, ...partTwo];

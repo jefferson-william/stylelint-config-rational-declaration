@@ -1,10 +1,7 @@
 const path = require('path');
 const specialProps = require('../groups/special');
 
-module.exports = ({
-  'border-in-box-model': borderInBoxModel = false,
-  'empty-line-between-groups': emptyLineBetweenGroups = false,
-} = {}) => ({
+module.exports = ({ 'empty-line-between-groups': emptyLineBetweenGroups = false } = {}) => ({
   plugins: ['stylelint-order', path.join(__dirname, '../plugin')],
   rules: {
     'order/properties-order': [],
@@ -14,10 +11,9 @@ module.exports = ({
         ignoreProperties: specialProps,
       },
     ],
-    'plugin/rational-order': [
+    'plugin/rational-declaration': [
       true,
       {
-        'border-in-box-model': borderInBoxModel,
         'empty-line-between-groups': emptyLineBetweenGroups,
       },
     ],

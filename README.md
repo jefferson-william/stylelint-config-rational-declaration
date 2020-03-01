@@ -1,14 +1,11 @@
-# stylelint-config-rational-order
-
-[![NPM version][version-img]][npm-url]
-[![NPM downloads][downloads-img]][npm-url]
-[![Build status][ci-img]][ci-url]
-[![License][l-img]][l-url]
+# stylelint-config-rational-declaration
 
 Stylelint config that sorts related property declarations by grouping together following the order:
 
 1.  Positioning
-2.  Box Model
+2.  Structure
+2.  Dimension
+2.  Definition
 3.  Typography
 4.  Visual
 5.  Animation
@@ -24,13 +21,28 @@ Stylelint config that sorts related property declarations by grouping together f
   left: 0;
   z-index: 10;
 
-  /* Box Model */
-  display: block;
+  /* Structure */
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   float: right;
+
+  /* Grid */
+  display: grid;
+  grid-template-columns: 40px 50px auto 50px 40px;
+  grid-template-rows: 25% 100px auto;
+
+  /* Dimension */
   width: 100px;
   height: 100px;
-  margin: 10px;
+
+  /* Definition */
+  border: 1px solid #888;
+  border-radius: 4px;
   padding: 10px;
+  margin: 10px;
 
   /* Typography */
   color: #888;
@@ -40,8 +52,6 @@ Stylelint config that sorts related property declarations by grouping together f
 
   /* Visual */
   background-color: #eee;
-  border: 1px solid #888;
-  border-radius: 4px;
   opacity: 1;
 
   /* Animation */
@@ -57,9 +67,9 @@ Stylelint config that sorts related property declarations by grouping together f
 1.  Add `stylelint`, `stylelint-order` and this package to your project:
 
 ```bash
-npm install --save-dev stylelint stylelint-order stylelint-config-rational-order
+npm install --save-dev stylelint stylelint-order stylelint-config-rational-declaration
 # or, if you prefer yarn over npm:
-yarn add --dev stylelint stylelint-order stylelint-config-rational-order
+yarn add --dev stylelint stylelint-order stylelint-config-rational-declaration
 ```
 
 2.  Add this package to the end of your extends array inside Stylelint
@@ -69,7 +79,7 @@ yarn add --dev stylelint stylelint-order stylelint-config-rational-order
 {
   "extends": [
     // "stylelint-config-standard",
-    "stylelint-config-rational-order"
+    "stylelint-config-rational-declaration"
   ]
 }
 ```
@@ -79,30 +89,21 @@ This shareable config contains the following:
 {
   "plugins": [
     "stylelint-order",
-    "stylelint-config-rational-order/plugin"
+    "stylelint-config-rational-declaration/plugin"
   ],
   "rules": {
     "order/properties-order": [],
-    "plugin/rational-order": [true, {
-      "border-in-box-model": false,
+    "plugin/rational-declaration": [true, {
       "empty-line-between-groups": false,
     }]
   }
 }
 ```
 
-Since it adds `stylelint-order` and `stylelint-config-rational-order` to plugins and also adds required rules, you don't have to do this yourself when extending this config.
+Since it adds `stylelint-order` and `stylelint-config-rational-declaration` to plugins and also adds required rules, you don't have to do this yourself when extending this config.
 
 
 ## Optional options / rules
-
-#### border-in-box-model
-
-Defines to which group the **border** property belongs to.
-
-If `true` **border** property belongs to the **box model section**.
-The default value is `false` (**border** property belongs to the **visual section**).
-
 
 #### empty-line-between-groups
 
@@ -121,14 +122,7 @@ If `true` adds an empty line between groups. The default value is `false`.
 
 ## Credits
 
+https://github.com/constverum/stylelint-config-rational-order/packages
+
 * [Code Guide by @mdo](http://codeguide.co/)
 * [Code Guide by HTML Academy](https://github.com/htmlacademy/codeguide)
-
-
-[npm-url]: https://www.npmjs.com/package/stylelint-config-rational-order
-[downloads-img]: https://img.shields.io/npm/dt/stylelint-config-rational-order.svg?style=flat-square
-[version-img]: https://img.shields.io/npm/v/stylelint-config-rational-order.svg?style=flat-square
-[ci-url]: https://travis-ci.org/constverum/stylelint-config-rational-order
-[ci-img]: https://img.shields.io/travis/constverum/stylelint-config-rational-order.svg?style=flat-square
-[l-url]: https://www.npmjs.com/package/stylelint-config-rational-order
-[l-img]: https://img.shields.io/npm/l/stylelint-config-rational-order.svg?style=flat-square
